@@ -13,7 +13,7 @@
   secondscreenHost.start({
     // This is the name that will be displayed in the list on the mobile app
     // that users use to choose which host app to connect to
-    name: "Boilerplate",
+    name: "Multi Draw",
 
     // No more than 10 players can connect.
     maxPlayers: 10,
@@ -66,12 +66,25 @@
     slot.style.background = e.color;
   });
 
+  function showDrawing(drawingMode){
+    if (drawingMode) {
+      document.getElementById('draw-mode').style.display = 'block';
+      document.getElementById('instructions-mode').style.display = 'none';
+    } else {
+      document.getElementById('draw-mode').style.display = 'none';
+      document.getElementById('instructions-mode').style.display = 'block';
+    }
+  }
+  showDrawing(false);
+
   secondscreenHost.on(secondscreenHost.EventTypes.DEVICE_CONNECTED, function (e){
     // A controller connected
+    showDrawing(true);
   });
 
   secondscreenHost.on(secondscreenHost.EventTypes.DEVICE_DISCONNECTED, function (e){
     // A controller disconnected
+    showDrawing(false);
   });
 
   secondscreenHost.on(secondscreenHost.EventTypes.CONTROLS_URL_CHANGE, function(e) {
@@ -90,10 +103,27 @@
       // Example use case, now send some initial state that you might want synchronized
     }
     // The controller sends a 'jump' message when the big red button is pressed
-    else if(e.message === 'jump') {
+    else if(e.message === 'draw') {
       mario.jump();
     }
   });
+
+  // Create an a Drawing API instance. Make it global for easier hacking in the
+  // javascript console.
+  drawing = new Drawing('drawing', 2000, 2000);
+
+  // Initialize the canvas to white
+  drawing.clear('white');
+
+  // Listen for resize events to center the drawing canvas. NOTE: The body element
+  // is set to clip everything to prevent scrolling.
+  function resize() {
+    drawing.el.style.marginLeft = Math.floor( (window.innerWidth-drawing.width) / 2 ) + 'px';
+    drawing.el.style.marginTop = Math.floor( (window.innerHeight-drawing.height) / 2 ) + 'px';
+  }
+  window.addEventListener('resize', resize);
+  // Call resize to set the initial layout
+  resize();
 
   // Uncomment this to add a utilify function notifyClient() that sends a message
   // to all connected clients.

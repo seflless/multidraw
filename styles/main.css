@@ -1,13 +1,14 @@
 body {
   margin: 0px;
   font-family: Trebuchet, Helvetica, Arial, sans-serif;
+  overflow: hidden;
 }
 
 .class {
   clear: both;
 }
 
-#container {
+#instructions-mode {
   width: 100%;
   max-width: 480px;
   margin: 0px auto;
@@ -15,22 +16,6 @@ body {
   text-align: center;
 }
 
-#world {
-  padding: 50px 0px 15px 0px;
-}
-#mario {
-  position: relative;
-}
-
-#mario-shadow {
-  height: 2px;
-  background: black;
-  border-radius: 4px;
-  display: inline-block;
-  position: relative;
-  top: -15px;
-  left: 3px;
-}
 
 #slot {
   width: 22px;
@@ -41,23 +26,7 @@ body {
   top: 5px;
 }
 
-#button {
-  margin: 40px 0px;
-  border: none;
-  border-radius: 10px;
-  width: 150px;
-  font-size: 0.7em;
-  outline: none;
-  cursor: pointer;
-
-  /* Initially hide the button, until a device has connected */
-  display: none;
-}
-#button:active{
-  background: #9f9f9f;
-}
-
-#button, li {
+li {
   font-size: 18px;
   line-height: 32px;
 }

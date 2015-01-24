@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-  <title>Boilerplate</title>
+  <title>Multi Draw</title>
   <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
   <link rel="icon" href="images/favicon.ico" type="image/x-icon">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,16 +9,12 @@
   <link rel="stylesheet" type="text/css" href="styles/main.css">
 </head>
 <body>
-  <div id="container">
+  <div id="draw-mode">
+    <canvas id="drawing"></canvas>
+  </div>
 
-    <div id="world">
-      <img id="mario" src="images/mario.png"/>
-      <div class="clear"></div>
-      <span id="mario-shadow"></span>
-    </div>
-
-    <button id="button">Click Me</button>
-
+  <div id="instructions-mode">
+    <img src="images/pencil.png"/>
     <ol id="instructions">
       <li>Install the <a href="http://playbrassmonkey.com/">Brass Monkey</a> app. ( iOS / Android )</li>
       <li>Open up Brass Monkey with your phone/tablet on the same network.</li>
@@ -29,7 +25,7 @@
   </div>
 
   <script src="scripts/red5pro/secondscreen-host.min.js"></script>
-  <script src="scripts/mario.js"></script>
+  <script src="scripts/drawing.js"></script>
   <script src="scripts/app.js"></script>
 </body>
 </html>
