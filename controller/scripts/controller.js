@@ -1,14 +1,23 @@
 /*global window, document*/
 (function(window, document) {
-  'use strict';
 
-  var secondscreenClient = window.secondscreenClient.noConflict(),
-      jumpButton = document.getElementById('jump');
+  var secondscreenClient = window.secondscreenClient.noConflict();
 
-  // Send a 'jump' message when the button is touched
-  jumpButton.addEventListener('touchstart', function(){
-    secondscreenClient.send('jump');
+  drawing = new Drawing(function(x0, y0, x1, y1, color, brushSize){
+    secondscreenClient.send('line', {
+      x0: x0,
+      y0: y0,
+      x1: x1,
+      y1: y1,
+      color: color,
+      brushSize: brushSize
+    });
   });
+
+  drawing.renderer.el.addEventListener('touchstart', function(){
+    // Send a 'jump' message when the button is touched
+    secondscreenClient.send('jump');
+  })
 
   secondscreenClient.on('test', function(data) {
     // Respond to a 'test' message

@@ -1,35 +1,92 @@
 /*
- * drawing.js - Implements a light wrapper around the canvas element's drawing
- *              API
- *
- */
+* drawing.js - Implements a light wrapper around the canvas element's drawing
+*              API
+*
+*/
 (function(){
 
-function Drawing(id, width, height) {
-  this.el = document.getElementById(id);
+  function Drawing(onLineCB) {
+    var self = this;
 
-  this.ctx = this.el.getContext('2d');
+    this.onLineCB = onLineCB;
 
-  this.width = width;
-  this.height = height;
-  this.el.width = width;
-  this.el.height = height;
-}
+    this.renderer = new Renderer('drawing', 2000, 2000);
+    this.renderer.clear('white');
 
-Drawing.prototype.clear = function(color){
-  this.ctx.fillStyle = color;
-  this.ctx.fillRect(0, 0, this.width, this.height);
-}
+    this.color = 'black';
+    this.brushSize = 2.0;
 
-Drawing.prototype.line = function(x0, y0, x1, y1, color){
-  this.ctx.strokeStyle = color;
-  this.ctx.beginPath();
-  this.ctx.moveTo(Math.floor(x0), Math.floor(y0));
-  this.ctx.lineTo(Math.floor(x1), Math.floor(y1));
-  this.ctx.stroke();
-}
+    var lastTouch = {};
 
-  // Make drawing interface globally accessible
-window.Drawing = Drawing;
+    function localCoordinates(touch){
+      var x,y;
+      if (touch.pageX || touch.pageY) {
+        x = touch.pageX;
+        y = touch.pageY;
+      }
+      else {
+        x = touch.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
+        y = touch.clientY + document.body.scrollTop + document.documentElement.scrollTop;
+      }
+      x -= self.renderer.el.offsetLeft;
+      y -= self.renderer.el.offsetTop;
+
+      return { x: x, y: y };
+    }
+
+    this.renderer.el.addEventListener('touchstart',function(e){
+      for(var i = 0; i<e.changedTouches.length; i++) {
+        lastTouch[e.changedTouches[i].identifier] = localCoordinates(e.changedTouches[i]);
+      }
+      e.preventDefault();
+    }, false);
+    this.renderer.el.addEventListener('touchmove',function(e){
+      for(var i = 0; i<e.changedTouches.length; i++) {
+        // Make sure we are tracking this touch
+        if( typeof lastTouch[e.changedTouches[i].identifier] === 'undefined' ) {
+          return;
+        }
+
+        var newPosition = localCoordinates(e.changedTouches[i]);
+        self.line(
+          lastTouch[e.changedTouches[i].identifier].x,
+          lastTouch[e.changedTouches[i].identifier].y,
+          newPosition.x,
+          newPosition.y,
+          self.color,
+          self.brushSize );
+
+        // Update last touch
+        lastTouch[e.changedTouches[i].identifier] = newPosition;
+      }
+      e.preventDefault();
+    }, false);
+    this.renderer.el.addEventListener('touchend',function(e){
+      for(var i = 0; i<e.changedTouches.length; i++) {
+        // Make sure we are tracking this touch
+        if( typeof lastTouch[e.changedTouches[i].identifier] === 'undefined' ) {
+          return;
+        }
+
+        // Remove from touch list
+        delete lastTouch[e.changedTouches[i].identifier];
+      }
+      e.preventDefault();
+    }, false);
+    this.renderer.el.addEventListener('touchcancel',function(e){
+      // Clear all the touches
+      lastTouch = {};
+    }, false);
+  }
+
+  Drawing.prototype.line = function(x0, y0, x1, y1, color, brushSize){
+    if(typeof this.onLineCB === 'function') {
+      this.onLineCB(x0, y0, x1, y1, color, brushSize);
+    }
+
+    this.renderer.line(x0, y0, x1, y1, color, brushSize);
+  }
+
+  window.Drawing = Drawing;
 
 })(window)

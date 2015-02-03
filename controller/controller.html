@@ -6,6 +6,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
   <link rel="stylesheet" type="text/css" href="styles/controller.css" />
+
+  <!--
+    Uncomment the code below for controller debugging support. For more details see:
+    https://github.com/francoislaberge/secondscreen-multidraw#debugging-it
+  -->
+  <!--
+  <script>
+    var weinre = document.createElement('script');
+    weinre.setAttribute('src', 'http://'+ location.hostname +':8181/target/target-script-min.js#anonymous');
+    document.head.appendChild(weinre);
+  </script>
+  -->
+
 </head>
 <body>
   <canvas id="drawing"></canvas>
@@ -13,7 +26,8 @@
   <script src="scripts/red5pro/bm-inject.js"></script>
   <script src="scripts/red5pro/secondscreen-client.min.js"></script>
 
-  <script src="../scripts/drawing.js"></script>
-  <script src="scripts/controller.js"></script>
+  <script src="../scripts/renderer.js?444"></script>
+  <script src="../scripts/drawing.js?444"></script>
+  <script src="scripts/controller.js?444"></script>
 </body>
 </html>

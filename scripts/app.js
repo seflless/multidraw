@@ -93,37 +93,20 @@
 
   // Listen for messages from the controller app
   secondscreenHost.on(secondscreenHost.EventTypes.MESSAGE, function(e) {
-    // We created a custom 'ready' message that the controller sends to indicate
-    // when it's finish initializing. This makes for cleaner logic for when a
-    // controller might want to do some asynchronous loading/logic before officially
-    // starting to communicate with the host app
-    // TODO: This comment may be in correct. I can't find a custom 'ready' function in the
-    // original sample I based this on.
-    if(e.message === 'ready') {
-      // Example use case, now send some initial state that you might want synchronized
-    }
-    // The controller sends a 'jump' message when the big red button is pressed
-    else if(e.message === 'draw') {
-      mario.jump();
+    if( e.message === 'line' ) {
+      drawing.renderer.line(
+        e.state.x0,
+        e.state.y0,
+        e.state.x1,
+        e.state.y1,
+        e.state.color,
+        e.state.brushSize );
     }
   });
 
-  // Create an a Drawing API instance. Make it global for easier hacking in the
+  // Create an Drawing instance. Make it global for easier hacking in the
   // javascript console.
-  drawing = new Drawing('drawing', 2000, 2000);
-
-  // Initialize the canvas to white
-  drawing.clear('white');
-
-  // Listen for resize events to center the drawing canvas. NOTE: The body element
-  // is set to clip everything to prevent scrolling.
-  function resize() {
-    drawing.el.style.marginLeft = Math.floor( (window.innerWidth-drawing.width) / 2 ) + 'px';
-    drawing.el.style.marginTop = Math.floor( (window.innerHeight-drawing.height) / 2 ) + 'px';
-  }
-  window.addEventListener('resize', resize);
-  // Call resize to set the initial layout
-  resize();
+  drawing = new Drawing();
 
   // Uncomment this to add a utilify function notifyClient() that sends a message
   // to all connected clients.
