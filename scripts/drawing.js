@@ -84,7 +84,7 @@
       this.onLineCB(x0, y0, x1, y1, color, brushSize);
     }
 
-    this.renderer.line(x0, y0, x1, y1, color, brushSize);
+    //this.renderer.line(x0, y0, x1, y1, color, brushSize);
   }
 
   window.Drawing = Drawing;
