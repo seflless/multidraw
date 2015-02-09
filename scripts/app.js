@@ -21,11 +21,10 @@
     // This is the legacy Brass Monkey registry. It is now possible
     // to self host your own registry server via a Red5Pro subscription
     // or to use the hosted Red5Pro service
-    registryUrl: "ws://registry.monkeysecurity.com:6262/live",
+    registryUrl: "ws://162.242.210.105:6262/secondscreen",
     //registryUrl: "ws://localhost:6262/secondscreen",
 
-    // Ignore these 3 settings for now
-    appId: "a65971f24694b9c47a9bcd01",
+    appId: "Multi Draw",
     swfobjectUrl: 'scripts/red5pro/swf/swfobject.js',
     swfUrl: "scripts/red5pro/swf/secondscreenHost.swf",
 
