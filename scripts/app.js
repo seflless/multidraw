@@ -24,7 +24,7 @@
     registryUrl: "ws://162.242.210.105:6262/secondscreen",
     //registryUrl: "ws://localhost:6262/secondscreen",
 
-    appId: "Multi Draw",
+    appId: "secondscreen",
     swfobjectUrl: 'scripts/red5pro/swf/swfobject.js',
     swfUrl: "scripts/red5pro/swf/secondscreenHost.swf",
 
