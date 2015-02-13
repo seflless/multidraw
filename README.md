@@ -1,7 +1,7 @@
 # Overview
 Drawing app where multiple people can draw together on a larger shared screen.
 
-  - [Live Demo](http://francoislaberge.com/secondscreen-multidraw/).
+  - [Live Demo](http://francoislaberge.com/multidraw/).
   - Based on [francoislaberge/red5pro-secondscreen-boilerplate](https://github.com/francoislaberge/red5pro-secondscreen-boilerplate)
   - [Red5Pro Secondscreen Documentation](http://red5pro.com/docs/secondscreen/html5/).
     - [Host (App/Game) Documentation](http://red5pro.com/docs/secondscreen/html5/#html-host-library)
