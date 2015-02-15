@@ -5,8 +5,24 @@
 */
 (function(){
 
+  var modes = {
+        PEN: 'PEN',
+        PINCH: 'PINCH'
+      },
+      states = {
+        IDLE: 'IDLE',
+        DRAWING: 'DRAWING',
+        SCROLL_SCALING: 'SCROLL_SCALING'
+      };
+
+
   function Drawing(onLineCB, unthrottledDrawing) {
     var self = this;
+
+    /*
+    this.currentMode = modes.PINCH;
+    this.currentState = states.IDLE;
+    */
 
     this.onLineCB = onLineCB;
 
