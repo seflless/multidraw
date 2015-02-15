@@ -10,7 +10,9 @@
 </head>
 <body>
   <div id="draw-mode">
-    <canvas id="drawing"></canvas>
+    <div id="container">
+      <canvas id="drawing"></canvas>
+    </div>
   </div>
 
   <div id="instructions-mode">
@@ -25,6 +27,7 @@
   </div>
 
   <script src="scripts/red5pro/secondscreen-host.min.js"></script>
+  <script src="scripts/requestAnimationFrame.js"></script>
   <script src="scripts/renderer.js"></script>
   <script src="scripts/drawing.js"></script>
   <script src="scripts/app.js"></script>

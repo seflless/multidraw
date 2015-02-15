@@ -22,13 +22,34 @@
 
 </head>
 <body>
-  <canvas id="drawing"></canvas>
+  <div id="container">
+    <canvas id="drawing" style="display:none;"></canvas>
+  </div>
 
+  <!--
+    Dynamically insert script tags so that we can cache bust any aggressive
+    caching webviews will do. Otherwise often on reloading your changes won't
+    show up.
+  -->
   <script src="scripts/red5pro/bm-inject.js"></script>
   <script src="scripts/red5pro/secondscreen-client.min.js"></script>
+  <script>
+    var scriptsSources = [
+          '../scripts/requestAnimationFrame.js',
+          '../scripts/renderer.js',
+          '../scripts/drawing.js',
+          'scripts/controller.js',
+        ];
 
-  <script src="../scripts/renderer.js?666"></script>
-  <script src="../scripts/drawing.js?666"></script>
-  <script src="scripts/controller.js?666"></script>
+    scriptsSources.forEach(function(src) {
+      var script = document.createElement('script');
+
+      script.type = 'text/javascript';
+      script.src = src + '?cachebust=' + (new Date().getTime());
+      script.async = false;
+      document.getElementsByTagName('head')[0].appendChild(script);
+    })
+  </script>
+
 </body>
 </html>

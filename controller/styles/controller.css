@@ -4,12 +4,9 @@ body {
   overflow: hidden;
 }
 
-#container {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  padding-top: 50%;
+canvas, svg {
+  position: absolute;
 }
-#jump {
-
+svg {
+  z-index: 1;
 }

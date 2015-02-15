@@ -5,12 +5,12 @@
 */
 (function(){
 
-  function Drawing(onLineCB) {
+  function Drawing(onLineCB, unthrottledDrawing) {
     var self = this;
 
     this.onLineCB = onLineCB;
 
-    this.renderer = new Renderer('drawing', 2000, 2000);
+    this.renderer = new Renderer('drawing', 'container', 2000, 2000, unthrottledDrawing);
     this.renderer.clear('white');
 
     this.color = 'black';
@@ -28,19 +28,19 @@
         x = touch.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
         y = touch.clientY + document.body.scrollTop + document.documentElement.scrollTop;
       }
-      x -= self.renderer.el.offsetLeft;
-      y -= self.renderer.el.offsetTop;
+      x -= self.renderer.container.offsetLeft;
+      y -= self.renderer.container.offsetTop;
 
       return { x: x, y: y };
     }
 
-    this.renderer.el.addEventListener('touchstart',function(e){
+    this.renderer.container.addEventListener('touchstart',function(e){
       for(var i = 0; i<e.changedTouches.length; i++) {
         lastTouch[e.changedTouches[i].identifier] = localCoordinates(e.changedTouches[i]);
       }
       e.preventDefault();
     }, false);
-    this.renderer.el.addEventListener('touchmove',function(e){
+    this.renderer.container.addEventListener('touchmove',function(e){
       for(var i = 0; i<e.changedTouches.length; i++) {
         // Make sure we are tracking this touch
         if( typeof lastTouch[e.changedTouches[i].identifier] === 'undefined' ) {
@@ -61,7 +61,7 @@
       }
       e.preventDefault();
     }, false);
-    this.renderer.el.addEventListener('touchend',function(e){
+    this.renderer.container.addEventListener('touchend',function(e){
       for(var i = 0; i<e.changedTouches.length; i++) {
         // Make sure we are tracking this touch
         if( typeof lastTouch[e.changedTouches[i].identifier] === 'undefined' ) {
@@ -73,7 +73,7 @@
       }
       e.preventDefault();
     }, false);
-    this.renderer.el.addEventListener('touchcancel',function(e){
+    this.renderer.container.addEventListener('touchcancel',function(e){
       // Clear all the touches
       lastTouch = {};
     }, false);

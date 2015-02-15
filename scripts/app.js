@@ -106,7 +106,7 @@
 
   // Create an Drawing instance. Make it global for easier hacking in the
   // javascript console.
-  drawing = new Drawing();
+  drawing = new Drawing(null, true);
 
   // Uncomment this to add a utilify function notifyClient() that sends a message
   // to all connected clients.

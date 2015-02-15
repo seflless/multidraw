@@ -1,0 +1,69 @@
+<html>
+<head>
+<body style="margin: 0px;">
+  <div id="container"></div>
+<script>
+
+  var lineBuffer = [];
+
+  createline = function (x1, y1, x2, y2, color, w) {
+      var aLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      aLine.setAttribute('x1', x1);
+      aLine.setAttribute('y1', y1);
+      aLine.setAttribute('x2', x2);
+      aLine.setAttribute('y2', y2);
+      aLine.setAttribute('stroke', color);
+      aLine.setAttribute('stroke-width', w);
+      return aLine;
+  }
+
+  function start() {
+      var aSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      aSvg.setAttribute('width', 1000);
+      aSvg.setAttribute('height', 1000);
+      var w = document.getElementById('container');
+
+      var lastX,
+          lastY;
+      aSvg.addEventListener('touchstart', function(e){
+        lastX = e.changedTouches[0].clientX;
+        lastY = e.changedTouches[0].clientY;
+
+        e.preventDefault();
+        e.stopPropagation();
+      }, false);
+      aSvg.addEventListener('touchmove', function(e){
+        if(typeof lastX === 'undefined'){
+          return;
+        }
+
+        var line = createline(lastX, lastY, e.changedTouches[0].clientX, e.changedTouches[0].clientY, 'rgb(0,0,0)', 2);
+        aSvg.appendChild(line);
+
+        // Keep a window of history of svg lines created. Never have more than
+        // maxLines
+        var maxLines = 30;
+        lineBuffer.push(line);
+
+        if( lineBuffer.length>=maxLines ){
+          aSvg.removeChild(lineBuffer.shift());
+        }
+
+        lastX = e.changedTouches[0].clientX;
+        lastY = e.changedTouches[0].clientY;
+
+        e.preventDefault();
+        e.stopPropagation();
+
+      }, false);
+      aSvg.addEventListener('touchend', function(e){
+        lastX = lastY = undefined;
+
+        e.preventDefault();
+        e.stopPropagation();
+      }, false);
+      w.appendChild(aSvg);
+  }
+
+  start();
+</script>
